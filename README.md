@@ -1,8 +1,8 @@
 # CookieJar
 
-[![build statud](https://img.shields.io/travis/flutterchina/cookie_jar/master.svg?style=flat-square)](https://travis-ci.org/flutterchina/cookie_jar)
+[![build statud](https://img.shields.io/travis/tautalos/cookie_jar/master.svg?style=flat-square)](https://travis-ci.org/tautalos/cookie_jar)
 [![Pub](https://img.shields.io/pub/v/cookie_jar.svg?style=flat-square)](https://pub.dartlang.org/packages/cookie_jar)
-[![support](https://img.shields.io/badge/platform-flutter%7Cdart%20vm-ff69b4.svg?style=flat-square)](https://github.com/flutterchina/cookie_jar)
+[![support](https://img.shields.io/badge/platform-flutter%7Cdart%20vm-ff69b4.svg?style=flat-square)](https://github.com/tautalos/cookie_jar)
 
 A cookie manager for http requests in Dart, by which you can deal with the complex cookie policy and persist cookies easily.
 
@@ -23,9 +23,9 @@ void main() async {
   List<Cookie> cookies = [new Cookie("name", "wendux"),new Cookie("location", "china")];
   var cj = new CookieJar();
   //Save cookies   
-  cj.saveFromResponse(Uri.parse("https://www.baidu.com/"), cookies);
+  cj.saveFromResponse(Uri.parse("https://www.google.com/"), cookies);
   //Get cookies  
-  List<Cookie> results = cj.loadForRequest(Uri.parse("https://www.baidu.com/xx"));
+  List<Cookie> results = cj.loadForRequest(Uri.parse("https://www.google.com/xx"));
   print(results);  
 }    
        
@@ -99,36 +99,36 @@ response= await request.close();
 cj.saveFromResponse(uri, response.cookies);
 ```
 
-## Working with dio
+## Working with web
 
-[dio](https://github.com/flutterchina/dio) is a powerful Http client for Dart, which supports Interceptors, Global configuration, FormData, File downloading, Timeout etc.  And [dio](https://github.com/flutterchina/dio) supports to manage cookies with cookie_jar, the simple example is:
+[web](https://github.com/tautalos/web) is a powerful Http client for Dart, which supports Interceptors, Global configuration, FormData, File downloading, Timeout etc.  And [web](https://github.com/tautalos/web) supports to manage cookies with cookie_jar, the simple example is:
 
 ```dart
-import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:web/web.dart';
+import 'package:web_cookie_manager/web_cookie_manager.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 
 main() async {
-  var dio =  Dio();
+  var web =  Web();
   var cookieJar=CookieJar();
-  dio.interceptors.add(CookieManager(cookieJar));
-  await dio.get("https://baidu.com/");
+  web.interceptors.add(CookieManager(cookieJar));
+  await web.get("https://google.com/");
   // Print cookies
-  print(cookieJar.loadForRequest(Uri.parse("https://baidu.com/")));
+  print(cookieJar.loadForRequest(Uri.parse("https://google.com/")));
   // second request with the cookie
-  await dio.get("https://baidu.com/");
+  await web.get("https://google.com/");
 }
 ```
 
-More details about [dio](https://github.com/flutterchina/dio)  see : https://github.com/flutterchina/dio .
+More details about [web](https://github.com/tautalos/web)  see : https://github.com/tautalos/web .
 
 ## Copyright & License
 
-This open source project authorized by https://flutterchina.club , and the license is MIT.
+This open source project authorized by https://tautalos.club , and the license is MIT.
 
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/flutterchina/cookie_jar
+[tracker]: https://github.com/tautalos/cookie_jar
 
