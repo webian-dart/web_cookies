@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../cookie_jar.dart';
+import '../web_cookies.dart';
 
-/// [PersistCookieJar] is a cookie manager which implements the standard
-/// cookie policy declared in RFC. [PersistCookieJar]  persists the cookies in files,
+/// [PersistWebCookies] is a cookie manager which implements the standard
+/// cookie policy declared in RFC. [PersistWebCookies]  persists the cookies in files,
 /// so if the application exit, the cookies always exist unless call [delete] explicitly.
-class PersistCookieJar extends DefaultCookieJar {
+class PersistWebCookies extends DefaultWebCookies {
   /// [dir]: where the cookie files saved in, it must be a directory.
   ///
   /// [persistSession]: Whether persisting the cookies that without
@@ -15,7 +15,7 @@ class PersistCookieJar extends DefaultCookieJar {
   /// otherwise, the session cookies will be persisted.
   ///
   /// [ignoreExpires]: save/load even cookies that have expired.
-  PersistCookieJar({
+  PersistWebCookies({
     String dir = './.cookies/',
     this.persistSession = true,
     bool ignoreExpires = false,

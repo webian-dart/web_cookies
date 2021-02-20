@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:test/test.dart';
 
-import '../lib/cookie_jar.dart';
+import '../lib/web_cookies.dart';
 
 void main() async {
   final cookies = <Cookie>[
@@ -21,8 +21,8 @@ void main() async {
   await dir.create();
 
   group('read and save', () {
-    test('DefaultCookieJar', () async {
-      final cj = CookieJar();
+    test('DefaultWebCookies', () async {
+      final cj = WebCookies();
       cj.saveFromResponse(Uri.parse('https://www.google.com/xx'), cookies);
       var results = cj.loadForRequest(Uri.parse('https://www.google.com/xx'));
       expect(results.length, 2);
@@ -40,7 +40,7 @@ void main() async {
     });
 
     test('SharedCookie', () async {
-      final cj = CookieJar();
+      final cj = WebCookies();
       final cookies = <Cookie>[
         Cookie('name', 'wendux')..domain = '.facebook.com',
         Cookie('location', 'china')..domain = 'qq.com',
@@ -52,7 +52,7 @@ void main() async {
     });
 
     test('SharedCookiePersist', () async {
-      final cj = PersistCookieJar(dir: './cookies');
+      final cj = PersistWebCookies(dir: './cookies');
       final cookies = <Cookie>[
         Cookie('name', 'wendux')..domain = '.facebook.com',
         Cookie('location', 'china')..domain = 'qq.com',
@@ -68,8 +68,8 @@ void main() async {
       expect(results.length, 0);
     });
 
-    test('PersistCookieJar', () async {
-      final cj = PersistCookieJar(dir: './test/cookies');
+    test('PersistWebCookies', () async {
+      final cj = PersistWebCookies(dir: './test/cookies');
       cj.saveFromResponse(Uri.parse('https://www.google.com/xx'), cookies);
       var results = cj.loadForRequest(Uri.parse('https://www.google.com/xx'));
       expect(results.length, 2);
@@ -90,8 +90,8 @@ void main() async {
       });
     });
 
-    test('PersistCookieJarLoad', () async {
-      final cj = PersistCookieJar(dir: './test/cookies');
+    test('PersistWebCookiesLoad', () async {
+      final cj = PersistWebCookies(dir: './test/cookies');
       var results = cj.loadForRequest(Uri.parse('https://www.google.com/xx'));
       expect(results.length, 2);
       results = cj.loadForRequest(Uri.parse('https://www.google.com/xx/dd'));
@@ -102,7 +102,7 @@ void main() async {
     });
 
     test('PersistCookieIgnoreExpires', () async {
-      var cj = PersistCookieJar(
+      var cj = PersistWebCookies(
         dir: './test/cookies',
         ignoreExpires: true,
       );
@@ -116,7 +116,7 @@ void main() async {
       ]);
       results = cj.loadForRequest(uri);
       expect(results.length, 1);
-      cj = PersistCookieJar(
+      cj = PersistWebCookies(
         dir: './test/cookies',
         ignoreExpires: false,
       );

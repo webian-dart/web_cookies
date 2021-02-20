@@ -1,8 +1,8 @@
-# CookieJar
+# WebCookies
 
-[![build statud](https://img.shields.io/travis/tautalos/cookie_jar/master.svg?style=flat-square)](https://travis-ci.org/tautalos/cookie_jar)
-[![Pub](https://img.shields.io/pub/v/cookie_jar.svg?style=flat-square)](https://pub.dartlang.org/packages/cookie_jar)
-[![support](https://img.shields.io/badge/platform-flutter%7Cdart%20vm-ff69b4.svg?style=flat-square)](https://github.com/tautalos/cookie_jar)
+[![build statud](https://img.shields.io/travis/tautalos/web_cookies/master.svg?style=flat-square)](https://travis-ci.org/tautalos/web_cookies)
+[![Pub](https://img.shields.io/pub/v/web_cookies.svg?style=flat-square)](https://pub.dartlang.org/packages/web_cookies)
+[![support](https://img.shields.io/badge/platform-flutter%7Cdart%20vm-ff69b4.svg?style=flat-square)](https://github.com/tautalos/web_cookies)
 
 A cookie manager for http requests in Dart, by which you can deal with the complex cookie policy and persist cookies easily.
 
@@ -10,7 +10,7 @@ A cookie manager for http requests in Dart, by which you can deal with the compl
 
 ```yaml
 dependencies:
-  cookie_jar: ^1.0.0
+  web_cookies: ^1.0.0
 ```
 
 ## Usage
@@ -18,10 +18,10 @@ dependencies:
 A simple usage example:
 
 ```dart
-import 'package:cookie_jar/cookie_jar.dart';
+import 'package:web_cookies/web_cookies.dart';
 void main() async {
   List<Cookie> cookies = [new Cookie("name", "wendux"),new Cookie("location", "china")];
-  var cj = new CookieJar();
+  var cj = new WebCookies();
   //Save cookies   
   cj.saveFromResponse(Uri.parse("https://www.google.com/"), cookies);
   //Get cookies  
@@ -37,21 +37,21 @@ void main() async {
 
 This class is a wrapper for `Cookie` class. Because the `Cookie` class doesn't  support Json serialization, for the sake of persistence, we use this class instead of it.
 
-### `CookieJar`
+### `WebCookies`
 
-`CookieJar` is a default cookie manager which implements the standard cookie policy declared in RFC. CookieJar saves the cookies in **RAM**, so if the application exit, all cookies will be cleared. A example as follow:
+`WebCookies` is a default cookie manager which implements the standard cookie policy declared in RFC. WebCookies saves the cookies in **RAM**, so if the application exit, all cookies will be cleared. A example as follow:
 
 ```dart
-var cj= new CookieJar();
+var cj= new WebCookies();
 ```
 
-### `PersistCookieJar`
+### `PersistWebCookies`
 
-`PersistCookieJar` is a cookie manager which implements the standard cookie policy declared in RFC. `PersistCookieJar`  persists the cookies in files, so if the application exit, the cookies always exist unless call `delete` explicitly. A example as follows:
+`PersistWebCookies` is a cookie manager which implements the standard cookie policy declared in RFC. `PersistWebCookies`  persists the cookies in files, so if the application exit, the cookies always exist unless call `delete` explicitly. A example as follows:
 
 ```dart
 // Cookie files will be saved in "./cookies"
-var cj=new PersistCookieJar(
+var cj=new PersistWebCookies(
     dir:"./cookies",
     ignoreExpires:true, //save/load even cookies that have expired.
 );
@@ -63,7 +63,7 @@ var cj=new PersistCookieJar(
 > // API `getTemporaryDirectory` is from "path_provider" package.
 > Directory tempDir = await getTemporaryDirectory();
 > String tempPath = tempDir.path;
-> CookieJar cj=new PersistCookieJar(dir:tempPath);
+> WebCookies cj=new PersistWebCookies(dir:tempPath);
 > ```
 
 
@@ -84,14 +84,14 @@ Delete cookies for specified `uri`. This API will delete all cookies for the `ur
 
 If `withDomainSharedCookie` is `true `  ,  will delete the domain-shared cookies.
 
-*Note: This API is only available in `PersistCookieJar` class.*
+*Note: This API is only available in `PersistWebCookies` class.*
 
 ## Working with `HttpClient`
 
-Using  `CookieJar` or `PersistCookieJar` manages  `HttpClient ` 's  request/response cookies is very easy:
+Using  `WebCookies` or `PersistWebCookies` manages  `HttpClient ` 's  request/response cookies is very easy:
 
 ```dart
-var cj=new CookieJar();
+var cj=new WebCookies();
 ...
 request= await httpClient.openUrl(options.method, uri);
 request.cookies.addAll(cj.loadForRequest(uri));
@@ -101,20 +101,20 @@ cj.saveFromResponse(uri, response.cookies);
 
 ## Working with web
 
-[web](https://github.com/tautalos/web) is a powerful Http client for Dart, which supports Interceptors, Global configuration, FormData, File downloading, Timeout etc.  And [web](https://github.com/tautalos/web) supports to manage cookies with cookie_jar, the simple example is:
+[web](https://github.com/tautalos/web) is a powerful Http client for Dart, which supports Interceptors, Global configuration, FormData, File downloading, Timeout etc.  And [web](https://github.com/tautalos/web) supports to manage cookies with web_cookies, the simple example is:
 
 ```dart
 import 'package:web/web.dart';
 import 'package:web_cookie_manager/web_cookie_manager.dart';
-import 'package:cookie_jar/cookie_jar.dart';
+import 'package:web_cookies/web_cookies.dart';
 
 main() async {
   var web =  Web();
-  var cookieJar=CookieJar();
-  web.interceptors.add(CookieManager(cookieJar));
+  var webCookies=WebCookies();
+  web.interceptors.add(CookieManager(webCookies));
   await web.get("https://google.com/");
   // Print cookies
-  print(cookieJar.loadForRequest(Uri.parse("https://google.com/")));
+  print(webCookies.loadForRequest(Uri.parse("https://google.com/")));
   // second request with the cookie
   await web.get("https://google.com/");
 }
@@ -130,5 +130,5 @@ This open source project authorized by https://tautalos.club , and the license i
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/tautalos/cookie_jar
+[tracker]: https://github.com/tautalos/web_cookies
 

@@ -1,4 +1,4 @@
-name: cookie_jar
+name: web_cookies
 description: A cookie manager for http requests in Dart, by which you can deal with the complex cookie policy and persist cookies easily.
 version: 2.0.0
 

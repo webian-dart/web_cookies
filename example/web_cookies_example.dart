@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../lib/cookie_jar.dart';
+import '../lib/web_cookies.dart';
 
 void main() async {
   final cookies = <Cookie>[
@@ -14,8 +14,8 @@ void main() async {
   ];
   final dir = Directory('./example/.cookies');
   await dir.create(recursive: true);
-  final cj = CookieJar();
-  //var cj=new PersistCookieJar('./example/.cookies');
+  final cj = WebCookies();
+  //var cj=new PersistWebCookies('./example/.cookies');
   cj.saveFromResponse(Uri.parse('https://www.google.com/xx'), cookies);
   var results = cj.loadForRequest(Uri.parse('https://www.google.com/xx'));
   assert(results.length == 2);

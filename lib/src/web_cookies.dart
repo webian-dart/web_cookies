@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import '../cookie_jar.dart';
+import '../web_cookies.dart';
 
-/// CookieJar is a cookie manager for http requests。
-abstract class CookieJar {
-  factory CookieJar({bool ignoreExpires = false}) {
-    return DefaultCookieJar(ignoreExpires: ignoreExpires);
+/// WebCookies is a cookie manager for http requests。
+abstract class WebCookies {
+  factory WebCookies({bool ignoreExpires = false}) {
+    return DefaultWebCookies(ignoreExpires: ignoreExpires);
   }
 
   /// Save the cookies for specified uri.

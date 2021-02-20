@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import '../cookie_jar.dart';
+import '../web_cookies.dart';
 
-/// [DefaultCookieJar] is a default cookie manager which implements the standard
-/// cookie policy declared in RFC. [DefaultCookieJar] saves the cookies in RAM, so if the application
+/// [DefaultWebCookies] is a default cookie manager which implements the standard
+/// cookie policy declared in RFC. [DefaultWebCookies] saves the cookies in RAM, so if the application
 /// exit, all cookies will be cleared.
-class DefaultCookieJar implements CookieJar {
+class DefaultWebCookies implements WebCookies {
   /// [ignoreExpires]: save/load even cookies that have expired.
-  DefaultCookieJar({this.ignoreExpires = false});
+  DefaultWebCookies({this.ignoreExpires = false});
 
   /// A array to save cookies.
   ///
