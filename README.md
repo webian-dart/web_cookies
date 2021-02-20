@@ -20,12 +20,12 @@ A simple usage example:
 ```dart
 import 'package:web_cookies/web_cookies.dart';
 void main() async {
-  List<Cookie> cookies = [new Cookie("name", "wendux"),new Cookie("location", "china")];
-  var cj = new WebCookies();
+  final myCookies = [Cookie("name", "elon"), Cookie("location", "mars")];
+  final webCookies = new WebCookies();
   //Save cookies   
-  cj.saveFromResponse(Uri.parse("https://www.google.com/"), cookies);
+  webCookies.saveFromResponse(Uri.parse("https://www.google.com/"), myCookies);
   //Get cookies  
-  List<Cookie> results = cj.loadForRequest(Uri.parse("https://www.google.com/xx"));
+  final results = cookies.loadForRequest(Uri.parse("https://www.google.com/xx"));
   print(results);  
 }    
        
@@ -42,7 +42,7 @@ This class is a wrapper for `Cookie` class. Because the `Cookie` class doesn't  
 `WebCookies` is a default cookie manager which implements the standard cookie policy declared in RFC. WebCookies saves the cookies in **RAM**, so if the application exit, all cookies will be cleared. A example as follow:
 
 ```dart
-var cj= new WebCookies();
+final webCookies = WebCookies();
 ```
 
 ### `PersistWebCookies`
@@ -51,7 +51,7 @@ var cj= new WebCookies();
 
 ```dart
 // Cookie files will be saved in "./cookies"
-var cj=new PersistWebCookies(
+final pwc = new PersistWebCookies(
     dir:"./cookies",
     ignoreExpires:true, //save/load even cookies that have expired.
 );
@@ -63,7 +63,7 @@ var cj=new PersistWebCookies(
 > // API `getTemporaryDirectory` is from "path_provider" package.
 > Directory tempDir = await getTemporaryDirectory();
 > String tempPath = tempDir.path;
-> WebCookies cj=new PersistWebCookies(dir:tempPath);
+> WebCookies webCookies = PersistWebCookies(dir:tempPath);
 > ```
 
 
@@ -91,17 +91,17 @@ If `withDomainSharedCookie` is `true `  ,  will delete the domain-shared cookies
 Using  `WebCookies` or `PersistWebCookies` manages  `HttpClient ` 's  request/response cookies is very easy:
 
 ```dart
-var cj=new WebCookies();
+final webCookies = new WebCookies();
 ...
-request= await httpClient.openUrl(options.method, uri);
-request.cookies.addAll(cj.loadForRequest(uri));
-response= await request.close();
-cj.saveFromResponse(uri, response.cookies);
+request = await httpClient.openUrl(options.method, uri);
+request.cookies.addAll(webCookies.loadForRequest(uri));
+response = await request.close();
+webCookies.saveFromResponse(uri, response.cookies);
 ```
 
-## Working with web
+## Working with Web
 
-[web](https://github.com/tautalos/web) is a powerful Http client for Dart, which supports Interceptors, Global configuration, FormData, File downloading, Timeout etc.  And [web](https://github.com/tautalos/web) supports to manage cookies with web_cookies, the simple example is:
+[Web](https://github.com/tautalos/web) is a powerful Http client for Dart, which supports Interceptors, Global configuration, FormData, File downloading, Timeout etc.  And [web](https://github.com/tautalos/web) supports to manage cookies with web_cookies, the simple example is:
 
 ```dart
 import 'package:web/web.dart';
@@ -109,8 +109,8 @@ import 'package:web_cookie_manager/web_cookie_manager.dart';
 import 'package:web_cookies/web_cookies.dart';
 
 main() async {
-  var web =  Web();
-  var webCookies=WebCookies();
+  final web =  Web();
+  final webCookies = WebCookies();
   web.interceptors.add(CookieManager(webCookies));
   await web.get("https://google.com/");
   // Print cookies
@@ -124,7 +124,7 @@ More details about [web](https://github.com/tautalos/web)  see : https://github.
 
 ## Copyright & License
 
-This open source project authorized by https://tautalos.club , and the license is MIT.
+This open source project and the license is MIT.
 
 ## Features and bugs
 
