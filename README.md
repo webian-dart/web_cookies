@@ -10,7 +10,10 @@ A cookie manager for http requests in Dart, by which you can deal with the compl
 
 ```yaml
 dependencies:
-  web_cookies: ^1.0.0
+  // web_cookies: ^1.0.0 // At the moment not available in pub.dev
+  web_cookies:
+    path: https://gitlab.com/mobiplay/web_cookies
+
 ```
 
 ## Usage
@@ -19,14 +22,17 @@ A simple usage example:
 
 ```dart
 import 'package:web_cookies/web_cookies.dart';
+
 void main() async {
+
   final myCookies = [Cookie("name", "elon"), Cookie("location", "mars")];
-  final webCookies = new WebCookies();
+  final webCookies = WebCookies();
   //Save cookies   
   webCookies.saveFromResponse(Uri.parse("https://www.google.com/"), myCookies);
   //Get cookies  
   final results = cookies.loadForRequest(Uri.parse("https://www.google.com/xx"));
-  print(results);  
+  print(results);
+
 }    
        
 ```
@@ -51,7 +57,7 @@ final webCookies = WebCookies();
 
 ```dart
 // Cookie files will be saved in "./cookies"
-final pwc = new PersistWebCookies(
+final pwc = PersistWebCookies(
     dir:"./cookies",
     ignoreExpires:true, //save/load even cookies that have expired.
 );
@@ -91,7 +97,7 @@ If `withDomainSharedCookie` is `true `  ,  will delete the domain-shared cookies
 Using  `WebCookies` or `PersistWebCookies` manages  `HttpClient ` 's  request/response cookies is very easy:
 
 ```dart
-final webCookies = new WebCookies();
+final webCookies = WebCookies();
 ...
 request = await httpClient.openUrl(options.method, uri);
 request.cookies.addAll(webCookies.loadForRequest(uri));
